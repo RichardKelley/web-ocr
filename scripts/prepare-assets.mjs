@@ -20,4 +20,6 @@ await cp(path.join(directory('@tesseract.js-data/eng'), '4.0.0'), path.join(vend
 for (const folder of ['cmaps', 'standard_fonts', 'wasm']) {
   await cp(path.join(directory('pdfjs-dist'), folder), path.join(vendor, 'pdf', folder), { recursive: true });
 }
+// Some static hosts send .mjs as text/plain. Keep the module worker as .js.
+await copyFile(path.join(directory('pdfjs-dist'), 'build', 'pdf.worker.min.mjs'), path.join(vendor, 'pdf', 'pdf.worker.min.js'));
 console.log('Prepared local OCR models, WebAssembly, and PDF resources.');

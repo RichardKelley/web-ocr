@@ -1,9 +1,8 @@
 import * as pdfjs from 'pdfjs-dist';
-import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { createWorker } from 'tesseract.js';
 
-pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 const vendor = new URL(`${import.meta.env.BASE_URL}vendor/`, window.location.href).href;
+pdfjs.GlobalWorkerOptions.workerSrc = `${vendor}pdf/pdf.worker.min.js`;
 
 export async function openPdf(bytes) {
   const task = pdfjs.getDocument({

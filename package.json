@@ -6,7 +6,7 @@
   "description": "Browser-local PDF OCR, search, and named indexes.",
   "scripts": {
     "dev": "node scripts/prepare-assets.mjs && vite --host 127.0.0.1",
-    "build": "node scripts/prepare-assets.mjs && vite build",
+    "build": "node scripts/prepare-assets.mjs && vite build && node scripts/verify-site.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test"
   },
