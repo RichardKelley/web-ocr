@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; worker-src 'self' blob:; connect-src 'self' blob:"
+    />
+    <title>TestOCR</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <aside class="file-sidebar" aria-labelledby="files-heading">
+      <section class="index-controls" aria-labelledby="indexes-heading">
+        <h2 id="indexes-heading">Indexes</h2>
+        <p id="active-index">Working: Unsaved index</p>
+        <label for="saved-index">Saved indexes</label>
+        <select id="saved-index"><option value="">Select an index…</option></select>
+        <div class="index-actions">
+          <button type="button" id="new-index">New</button>
+          <button type="button" id="save-index">Save…</button>
+          <button type="button" id="load-index" disabled>Load</button>
+          <button type="button" id="delete-index" disabled>Delete…</button>
+        </div>
+        <p id="index-message" role="status" aria-live="polite"></p>
+      </section>
+      <header class="sidebar-header file-header">
+        <h1 id="files-heading">Files</h1>
+        <button id="add-files" type="button">Add PDFs…</button>
+      </header>
+      <div class="file-list">
+        <ul aria-label="Working files"></ul>
+        <p class="empty-state">Drop PDFs into the window to add files.</p>
+      </div>
+      <p id="import-message" class="import-message" role="alert"></p>
+      <p class="storage-note">PDFs and indexes stay in this browser.</p>
+    </aside>
+    <main class="workspace" aria-label="Workspace">
+      <section class="search-panel" aria-labelledby="search-heading">
+        <h1 id="search-heading">Search your PDFs</h1>
+        <form id="search-form" role="search">
+          <label class="visually-hidden" for="search-input">Search indexed PDFs</label>
+          <div class="search-controls">
+            <input id="search-input" type="search" placeholder="Search indexed PDFs…" maxlength="512" autocomplete="off" autofocus />
+            <button type="submit" id="search-button">Search</button>
+          </div>
+        </form>
+        <p class="search-hint">Find whole words in indexed PDFs. Multiple words must appear on the same page.</p>
+        <p id="search-status" role="status" aria-live="polite"></p>
+      </section>
+      <section id="search-results" class="search-results" aria-label="Search results" hidden>
+        <ul id="result-list"></ul>
+      </section>
+      <section id="document-view" class="document-view" aria-label="Matching document page" hidden>
+        <header class="document-toolbar">
+          <button id="back-to-results" type="button">← Results</button>
+          <h2 id="document-title"></h2>
+        </header>
+        <p id="preview-status" role="status" aria-live="polite"></p>
+        <div class="preview-scroll">
+          <p id="matched-passage" class="matched-passage"></p>
+          <div class="page-sheet" hidden>
+            <img id="page-image" alt="" />
+            <svg id="page-highlights" aria-hidden="true"></svg>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="drop-overlay" aria-hidden="true">Drop PDFs to index</div>
+    <dialog id="save-index-dialog" aria-labelledby="save-index-heading">
+      <form id="save-index-form">
+        <h2 id="save-index-heading">Save index</h2>
+        <label for="index-name">Index name</label>
+        <input id="index-name" maxlength="80" required autocomplete="off" />
+        <p id="save-index-note">Saves the current file list, OCR text, and search index.</p>
+        <p id="save-index-error" class="error" role="alert"></p>
+        <div class="dialog-actions">
+          <button type="button" id="cancel-save-index">Cancel</button>
+          <button type="submit" id="confirm-save-index">Save index</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="delete-index-dialog" aria-labelledby="delete-index-heading">
+      <h2 id="delete-index-heading">Delete saved index?</h2>
+      <p id="delete-index-description"></p>
+      <p>Your current workspace and original PDFs will be kept.</p>
+      <p id="delete-index-error" class="error" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" id="cancel-delete-index" autofocus>Cancel</button>
+        <button type="button" id="confirm-delete-index">Delete index</button>
+      </div>
+    </dialog>
+    <dialog id="switch-index-dialog" aria-labelledby="switch-index-heading">
+      <h2 id="switch-index-heading">Replace current workspace?</h2>
+      <p id="switch-index-description"></p>
+      <p>There are unsaved changes. Cancel and save the current index first if you want to keep them.</p>
+      <div class="dialog-actions">
+        <button type="button" id="cancel-switch-index" autofocus>Cancel</button>
+        <button type="button" id="confirm-switch-index">Continue</button>
+      </div>
+    </dialog>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
+

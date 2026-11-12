@@ -1,0 +1,25 @@
+{
+  "name": "testocr-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser-local PDF OCR, search, and named indexes.",
+  "scripts": {
+    "dev": "node scripts/prepare-assets.mjs && vite --host 127.0.0.1",
+    "build": "node scripts/prepare-assets.mjs && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@tesseract.js-data/eng": "1.0.0",
+    "pdfjs-dist": "6.5.438",
+    "tesseract.js": "7.0.0"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "6.2.8",
+    "vite": "8.3.8"
+  }
+}
